@@ -1,0 +1,17 @@
+{
+  "name": "battleship",
+  "version": "1.0.0",
+  "description": "This is the first project i will be taking on as a front end developer. i will be using vanilla javascript and ccss along with HTML5 to create the webpage with the help of webpack to keep things in order and jest to take care of my tests. further i will use eslint to make sure my code is in order and prettier to make it more readable than it already is.",
+  "main": "/assets/javascript/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "html-webpack-plugin": "^5.6.0",
+    "prettier": "3.2.5"
+  }
+}
