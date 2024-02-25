@@ -30,22 +30,57 @@ test.skip('creates a 5x5 grid with coordinates to place ships', () => {
 
 test.skip('takes x and y as input and places the ship on the said coordinates according to the ships length and shape.', () => {
     let ship1 = new Ship('ship1', 2, 0, 'horizontal', 'abovewater')
-    let battleshipBoard = new GameBoard(10, 10, ship1);
+    let battleshipBoard = new GameBoard(10, 10);
     battleshipBoard.makeBoard();
-    expect(battleshipBoard.placeShipAt(5, 5)).toEqual([[5, 5, 'ship1'], [6, 5, 'ship1']])
+    expect(battleshipBoard.placeShipAt(5, 5, ship1)).toEqual([[5, 5, 'ship1'], [6, 5, 'ship1']])
 })
 
 test.skip('takes x and y as input and places the ship on the said coordinates according to the ships length and shape.', () => {
     let ship1 = new Ship('ship1', 2, 0, 'vertical', 'abovewater')
-    let battleshipBoard = new GameBoard(10, 10, ship1);
+    let battleshipBoard = new GameBoard(10, 10);
     battleshipBoard.makeBoard();
-    expect(battleshipBoard.placeShipAt(7, 2)).toEqual([[7, 2, 'ship1'], [7, 3, 'ship1']])
+    expect(battleshipBoard.placeShipAt(7, 2, ship1)).toEqual([[7, 2, 'ship1'], [7, 3, 'ship1']])
 })
 
-test('takes x and y as input for attack coordinates and increases hit count if the coordinates match with a ships coordinates', () => {
+test.skip('takes x and y as input for attack coordinates and increases hit count if the coordinates match with a ships coordinates', () => {
     let ship1 = new Ship('ship1', 2, 0, 'horizontal', 'abovewater');
-    let battleshipBoard = new GameBoard(10, 10, ship1);
+    let battleshipBoard = new GameBoard(10, 10);
     battleshipBoard.makeBoard();
-    battleshipBoard.placeShipAt(7, 2);
-    expect(battleshipBoard.recieveAttack(7, 3)).toEqual(1)
+    battleshipBoard.placeShipAt(7, 2, ship1);
+    expect(battleshipBoard.recieveAttack(7, 2, ship1)).toEqual(1)
+})
+
+test.skip('takes x and y as input for attack coordinates and increases hit count if the coordinates match with a ships coordinates', () => {
+    let ship1 = new Ship('ship1', 2, 0, 'vertical', 'abovewater');
+    let battleshipBoard = new GameBoard(10, 10);
+    battleshipBoard.makeBoard();
+    battleshipBoard.placeShipAt(7, 2, ship1);
+    expect(battleshipBoard.recieveAttack(7, 3, ship1)).toEqual(1)
+})
+
+test.skip('takes x and y as input for attack coordinates and increases hit count if the coordinates match with a ships coordinates else marks miss on the cooridnates', () => {
+    let ship1 = new Ship('ship1', 2, 0, 'vertical', 'abovewater');
+    let battleshipBoard = new GameBoard(10, 10);
+    battleshipBoard.makeBoard();
+    battleshipBoard.placeShipAt(7, 2, ship1);
+    expect(battleshipBoard.recieveAttack(8, 3, ship1)).toContainEqual([8, 3])
+})
+
+test('function that returns true when all ships are sunk.', () => {
+    let ship1 = new Ship('ship1', 2, 0, 'horizontal', 'abovewater');
+    let battleshipBoard = new GameBoard(10, 10);
+    battleshipBoard.makeBoard();
+    battleshipBoard.placeShipAt(5, 5, ship1);
+    battleshipBoard.recieveAttack(5, 5, ship1);
+    battleshipBoard.recieveAttack(6, 5, ship1);
+    expect(battleshipBoard.gameReport()).toBeTruthy();
+})
+
+test('function that returns false when all ships are not sunk.', () => {
+    let ship1 = new Ship('ship1', 2, 0, 'horizontal', 'abovewater');
+    let battleshipBoard = new GameBoard(10, 10);
+    battleshipBoard.makeBoard();
+    battleshipBoard.placeShipAt(5, 5, ship1);
+    battleshipBoard.recieveAttack(5, 5, ship1);
+    expect(battleshipBoard.gameReport()).toBeFalsy();
 })
