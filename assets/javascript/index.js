@@ -45,7 +45,7 @@ export function GameBoard(x, y) {
         let firstCoordinateIndex = grid.findIndex((element) => element[0] === x && element[1] === y)
         grid[firstCoordinateIndex].push(battleship.ships.name);
         shipCoordinates.push(grid[firstCoordinateIndex]);
-        if(battleshipCount.includes(battleship) == false) battleshipCount.push(battleship);
+        if(battleshipCount.includes(battleship) == false) battleshipCount.push(battleship.ships);
 
         if(battleship.ships.shape == 'horizontal') {
             for(let i = 1; i < battleship.ships.length; i++) {
@@ -71,7 +71,7 @@ export function GameBoard(x, y) {
             battleship.ships.hits += 1
             battleship.isSunk();
             if(battleship.ships.status === 'Underwater' && sunkenShips.includes(battleship) == false) {
-                sunkenShips.push(battleship);
+                sunkenShips.push(battleship.ships);
             }
             return battleship.ships.hits
         } else if(grid.findIndex((element) => element[0] === x && element[1] === y) > -1) {
@@ -84,14 +84,41 @@ export function GameBoard(x, y) {
 
 
     function gameReport() {
+        console.log(battleshipCount.length === sunkenShips.length)
         if(battleshipCount.length === sunkenShips.length) return true
 
         return false
     }
 
     return { 
-        makeBoard, placeShipAt, recieveAttack, missCoordinates, gameReport
+        makeBoard, placeShipAt, recieveAttack, missCoordinates, gameReport, battleshipCount, shipCoordinates
     } 
+}
+
+export function player(x, y, battleship, playerGameBoard, computerGameBoard) {
+    let players = [playerGameBoard, computerGameBoard];
+
+    let activePlayer = players[0];
+
+    const switchplayer = () => {activePlayer === players[1] ? activePlayer = players[0] : activePlayer = players[1]};
+
+    const computerAttackCoordinatesX = Math.random() * (11 - 0) + 0;
+    const computerAttackCoordinatesY = Math.random() * (11 - 0) + 0; 
+
+    if(activePlayer === players[0] && computerGameBoard.battleshipCount.includes(battleship.ships)) {
+        computerGameBoard.recieveAttack(x, y, battleship);
+        console.log(1)
+        if(computerGameBoard.gameReport() == true) return 'Player has won the game!'
+        switchplayer();
+        return true
+    } else if(activePlayer === players[1] && playerGameBoard.battleshipCount.includes(battleship.ships)) {
+        playerGameBoard.recieveAttack(computerAttackCoordinatesX, computerAttackCoordinatesY, battleship);
+        if(playerGameBoard.gameReport() == true) return 'Computer has won the game.'
+        switchplayer();
+        return true
+    }
+
+    return false
 }
 /*
 let ship1 = new Ship('ship1', 2, 0, 'horizontal', 'abovewater');
