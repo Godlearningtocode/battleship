@@ -19,20 +19,20 @@ export function GameBoard(x, y) {
 
     //function to place ships at the x and y coordinates
     function placeShipAt(x, y, battleship) {
-        let firstCoordinateIndex = grid.findIndex((element) => element[0] === x && element[1] === y)
+        let firstCoordinateIndex = grid.findIndex((element) => element[0] == x && element[1] == y)
         grid[firstCoordinateIndex].push(battleship.ships.name);
         shipCoordinates.push(grid[firstCoordinateIndex]);
         if(battleshipCount.includes(battleship) == false) battleshipCount.push(battleship.ships);
 
         if(battleship.ships.shape == 'horizontal') {
             for(let i = 1; i < battleship.ships.length; i++) {
-                let nextCoordinate = grid.findIndex((element) => element[0] === x + i && element[1] === y);
+                let nextCoordinate = grid.findIndex((element) => element[0] == Number(x) + i && element[1] == y);
                 grid[nextCoordinate].push(battleship.ships.name);
                 shipCoordinates.push(grid[nextCoordinate]);
             }
         } else if(battleship.ships.shape == 'vertical') {
             for(let i = 1; i < battleship.ships.length; i++) {
-                let nextCoordinate = grid.findIndex((element) => element[0] === x && element[1] === y + i);
+                let nextCoordinate = grid.findIndex((element) => element[0] == x && element[1] == Number(y) + i);
                 grid[nextCoordinate].push(battleship.ships.name);
                 shipCoordinates.push(grid[nextCoordinate]);
             }
@@ -44,6 +44,8 @@ export function GameBoard(x, y) {
     //function to attack the enemey ship at x and y coordinates
     function recieveAttack(x, y, battleship) {
         if(shipCoordinates.findIndex((element) => element[0] == x && element[1] == y) > -1) {
+            console.log(1)
+
             battleship.ships.hits += 1
             battleship.isSunk();
             if(battleship.ships.status === 'Underwater' && sunkenShips.includes(battleship) == false) {
