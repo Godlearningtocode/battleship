@@ -44,8 +44,6 @@ export function GameBoard(x, y) {
     //function to attack the enemey ship at x and y coordinates
     function recieveAttack(x, y, battleship) {
         if(shipCoordinates.findIndex((element) => element[0] == x && element[1] == y) > -1) {
-            console.log(1)
-
             battleship.ships.hits += 1
             battleship.isSunk();
             if(battleship.ships.status === 'Underwater' && sunkenShips.includes(battleship) == false) {

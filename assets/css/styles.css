@@ -1,6 +1,14 @@
+@font-face{
+    font-family: 'myFont';
+    src: url('/assets/images_and_fonts/BigShouldersStencilText-ExtraBold.ttf') format('truetype'),
+        url('/assets/images_and_fonts/BigShouldersStencilText-SemiBold.ttf') format('truetype');
+    font-style: normal;
+}
+
 html, body {
     margin: 0px;
     padding: 0px;
+    background-color: #EBEBEB;
 }
 
 #contentSection {
@@ -8,7 +16,7 @@ html, body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 50px;
+    gap: 25px;
 }
 
 #gameBoardContainer {
@@ -50,9 +58,47 @@ html, body {
 }
 
 .shipHit {
-    background-color: red;
+    background-color: #F94E65 !important;
 }
 
 .missHit {
-    background-color: green;
+    background-color: #6CAE32;
+}
+
+.shipColor {
+    background-color: gray;
+}
+
+#headerSection {
+    margin-top: 20px;
+}
+
+#header {
+    font-size: 5rem;
+    font-family: myFont;
+}
+
+#playerContainer, #computerContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+#playerHeading, #computerHeading {
+    font-size: 1.5rem;
+}
+
+#instructionHeading {
+    font-size: 2rem;
+    padding-bottom: 5px;
+    border-bottom: 1px dashed black;
+}
+
+#newGameButton {
+    font-size: 1.2rem;
+    font-family: myFont;
+    width: 150px;
+    height: 50px;
 }

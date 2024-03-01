@@ -28,12 +28,18 @@ const playerSection = document.querySelector('#playerSection');
 const computerSection = document.querySelector('#computerSection');
 const instructionHeading = document.querySelector('#instructionHeading');
 let playerShipsPlaced = 0;
+let newGameButton = document.querySelector('#newGameButton')
 
 
 //DOM manipulation
 instructionHeading.innerHTML = "players's turn"
 
 //Event Listeners:-
+// click event listener for the new game button to restart the board.
+newGameButton.addEventListener('click', () => {
+    location.reload();
+})
+
 //DOMContentLoaded event listener for when the webpage is loaded
 window.addEventListener('DOMContentLoaded', () => {
     computerBoard.placeShipAt(Math.floor(Math.random() * (7 - 0) + 0), Math.floor(Math.random() * (9 - 0) + 0), computerShip1)
@@ -53,38 +59,45 @@ window.addEventListener('click', (event) => {
         let y = event.target.dataset.y;
         let cell = event.target
         placePlayerShips(x, y, cell);
-        console.log(cell)
     }
 })
 
 //Click event listener for when the player clicks on the computer game board
 window.addEventListener('click', (event) => {
-    let cell = event.target;
-    let computerBattleship = computerShipArray[computerShipArray.findIndex((element) => element.ships.name == cell.dataset.battleship)];
-    if(cell.classList.contains('shipCell') && cell.classList.contains('computer') && activePlayer == 0) {
-        player(cell.dataset.x, cell.dataset.y, playerBoard, computerBoard, computerBattleship);
-        cell.classList.add('shipHit')
-        cell.classList.remove('computer')
-        
-        instructionHeading.textContent = "Computer's turn"
-
-        if(computerBoard.gameReport() == true) return instructionHeading.innerHTML = 'Player has won the game!';
-
-        setTimeout(() => {
-            computerTurn(activePlayer)
-        }, 1000);
-    } else if(cell.classList.contains('cell') && cell.classList.contains('computer') && !cell.classList.contains('shipHit') && activePlayer == 0) {
-        player(cell.dataset.x, cell.dataset.y, playerBoard, computerBoard, computerBattleship)
-        cell.classList.add('missHit');
-        cell.classList.remove('computer')
-        
-        instructionHeading.textContent = "Computer's turn";
-
-        if(computerBoard.gameReport() == true) return instructionHeading.innerHTML = 'Player has won the game!';
-
-        setTimeout(() => {
-            computerTurn(activePlayer)
-        }, 1000);
+    if(playerBoard.shipCoordinates.length === 13) {
+        let cell = event.target;
+        let computerBattleship = computerShipArray[computerShipArray.findIndex((element) => element.ships.name == cell.dataset.battleship)];
+        if(cell.classList.contains('shipCell') && cell.classList.contains('computer') && activePlayer == 0) {
+            player(cell.dataset.x, cell.dataset.y, playerBoard, computerBoard, computerBattleship);
+            cell.classList.add('shipHit')
+            cell.classList.remove('computer')
+            
+            instructionHeading.textContent = "Computer's turn"
+    
+            if(computerBoard.gameReport() == true) {
+                document.body.style = 'pointer-events: none'
+                return instructionHeading.innerHTML = 'Player has won the game!';
+            }
+    
+            setTimeout(() => {
+                computerTurn(activePlayer)
+            }, 1000);
+        } else if(cell.classList.contains('cell') && cell.classList.contains('computer') && !cell.classList.contains('shipHit') && activePlayer == 0) {
+            player(cell.dataset.x, cell.dataset.y, playerBoard, computerBoard, computerBattleship)
+            cell.classList.add('missHit');
+            cell.classList.remove('computer')
+            
+            instructionHeading.textContent = "Computer's turn";
+    
+            if(computerBoard.gameReport() == true) {
+                document.body.style = 'pointer-events: none'
+                return instructionHeading.innerHTML = 'Player has won the game!';
+            }
+    
+            setTimeout(() => {
+                computerTurn(activePlayer)
+            }, 1000);
+        }
     }
 })
 
@@ -166,24 +179,22 @@ function computerTurn(activePlayer) {
         }
     }
 
-        console.log(playerCell)
     if(playerCell.classList.contains('player') && playerCell.classList.contains('shipCell') && activePlayer == 1) {
         playerCell.classList.add('shipHit')
-        console.log(111)
-        console.log(playerCell)
         player(computerAttackCoordinatesX, computerAttackCoordinatesY, playerBoard, computerBoard, playerBattleship)
         playerCell.classList.remove('player')
     } else if(playerCell.classList.contains('cell') && playerCell.classList.contains('player') && !playerCell.classList.contains('shipHit') && activePlayer == 1) {
-        console.log(222)
         playerCell.classList.add('missHit')
         player(computerAttackCoordinatesX, computerAttackCoordinatesY, playerBoard, computerBoard, playerBattleship)
         playerCell.classList.remove('player')
     }
 
-    console.log(333)
     instructionHeading.textContent = "Player's turn";
 
-    if(playerBoard.gameReport() == true) instructionHeading.textContent = "Computer has won the game."
+    if(playerBoard.gameReport() == true) {
+        document.body.style = 'pointer-events: none'
+        return instructionHeading.textContent = "Computer has won the game.";
+    }
 }
 
 //function to place player ships on player Board
@@ -207,7 +218,6 @@ function placePlayerShips(x, y, cell) {
         playerBoard.placeShipAt(x, y, playerShip4);
         playerShipsPlaced++
         cell.classList.add('shipCell')
-        console.log(playerBoard.shipCoordinates)
         addClass()
         return instructionHeading.textContent = "All Ships have been placed, Player's turn to attack."
     }
@@ -221,7 +231,6 @@ function placePlayerShips(x, y, cell) {
 
 //Function to add shipCell classlist once all the ships have been placed
 function addClass() {
-    console.log(false)
     if(playerBoard.battleshipCount.length === 4) {
         let playerCell = document.querySelectorAll('.player');
         for(let i = 0; i < playerCell.length; i++) {
@@ -229,7 +238,7 @@ function addClass() {
             let y = playerCell[i].dataset.y;
             if(playerBoard.shipCoordinates.findIndex((element) => element[0] == x && element[1] == y) > -1) {
                 playerCell[i].classList.add('shipCell');
-                console.log(playerCell[i])
+                playerCell[i].classList.add('shipColor')
             }
         }
     }
