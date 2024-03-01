@@ -97,8 +97,9 @@ html, body {
 }
 
 #newGameButton {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-family: myFont;
-    width: 150px;
+    width: 180px;
     height: 50px;
+    border: 2px solid black;
 }
