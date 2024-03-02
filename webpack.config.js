@@ -2,7 +2,12 @@ const htmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 
 module.exports = {
-  entry: ["./assets/javascript/index.js", "./assets/javascript/gameboard.js", "./assets/javascript/ship.js", "./assets/javascript/player.js"],
+  entry: [
+    "./assets/javascript/index.js",
+    "./assets/javascript/gameboard.js",
+    "./assets/javascript/ship.js",
+    "./assets/javascript/player.js",
+  ],
   mode: "development",
   output: {
     path: path.resolve(__dirname, "./dist"),
@@ -12,13 +17,13 @@ module.exports = {
     rules: [
       {
         test: /\.css$/i,
-        use: ['style-loader', 'css-loader']
+        use: ["style-loader", "css-loader"],
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/i,
-        type: 'asset/resource',
+        type: "asset/resource",
       },
-    ]
+    ],
   },
   plugins: [
     new htmlWebpackPlugin({
