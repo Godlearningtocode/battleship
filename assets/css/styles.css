@@ -20,7 +20,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 25px;
+  gap: 15px;
 }
 
 #gameBoardContainer {
@@ -78,7 +78,7 @@ body {
 }
 
 #header {
-  font-size: 5rem;
+  font-size: 4.55rem;
   font-family: myFont;
 }
 
