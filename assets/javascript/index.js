@@ -47,6 +47,7 @@ let playerShipsPlaced = 0;
 let newGameButton = document.querySelector("#newGameButton");
 let activePlayerBattleship = document.querySelector('#activePlayerBattleship');
 let activeComputerBattleship = document.querySelector('#activeComputerBattleship')
+let gameBoardContainer = document.querySelector('#gameBoardContainer');
 
 //DOM manipulation
 instructionHeading.innerHTML = "players's turn";
@@ -110,7 +111,7 @@ window.addEventListener("click", (event) => {
       instructionHeading.textContent = "Computer's turn";
 
       if (computerBoard.gameReport() == true) {
-        document.body.style = "pointer-events: none";
+        gameBoardContainer.style = "pointer-events: none";
         return (instructionHeading.innerHTML = "Player has won the game!");
       }
 
@@ -136,7 +137,7 @@ window.addEventListener("click", (event) => {
       instructionHeading.textContent = "Computer's turn";
 
       if (computerBoard.gameReport() == true) {
-        document.body.style = "pointer-events: none";
+        gameBoardContainer.style = "pointer-events: none";
         return (instructionHeading.innerHTML = "Player has won the game!");
       }
 
